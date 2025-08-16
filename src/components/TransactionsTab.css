@@ -1,0 +1,165 @@
+.transactions-tab {
+  padding: 30px;
+}
+
+.tab-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.tab-header h2 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.tab-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.transactions-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-section {
+  margin-bottom: 40px;
+}
+
+.transactions-section h3 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.no-transactions {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 40px;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid;
+  transition: transform 0.2s ease;
+}
+
+.transaction-item:hover {
+  transform: translateX(5px);
+}
+
+.transaction-item.income {
+  border-left-color: #4CAF50;
+}
+
+.transaction-item.expense {
+  border-left-color: #f44336;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.transaction-main {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.transaction-description {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.transaction-category {
+  color: #666;
+  font-size: 0.9rem;
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.transaction-date {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.transaction-amount {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.amount {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.amount.income {
+  color: #4CAF50;
+}
+
+.amount.expense {
+  color: #f44336;
+}
+
+.btn-remove {
+  background: #ff4757;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.btn-remove:hover {
+  background: #ff3742;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .transactions-tab {
+    padding: 20px;
+  }
+
+  .transaction-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .transaction-amount {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
