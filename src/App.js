@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { TransactionProvider, useTransactions, CATEGORIES } from './contexts/TransactionContext';
+import { TransactionProvider, useTransactions } from './contexts/TransactionContext';
 import Login from './components/Login';
 import Register from './components/Register';
-import TransactionForm from './components/TransactionForm';
+import TabNavigation from './components/TabNavigation';
+import TransactionsTab from './components/TransactionsTab';
+import CategoriesTab from './components/CategoriesTab';
+import GoalsTab from './components/GoalsTab';
+import ReportsTab from './components/ReportsTab';
+import DashboardTab from './components/DashboardTab';
+import SettingsTab from './components/SettingsTab';
 import './App.css';
 
 // Componente principal da aplicação (requer autenticação)
 const FinanceApp = () => {
   const [showAuth, setShowAuth] = useState('login'); // 'login' ou 'register'
+  const [activeTab, setActiveTab] = useState('transactions');
   const { currentUser, logout } = useAuth();
   const { 
     transactions, 
+    categories,
     deleteTransaction, 
     getTotalIncome, 
     getTotalExpenses, 
@@ -22,14 +30,54 @@ const FinanceApp = () => {
     logout();
   };
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('pt-BR');
+
+  function formatDate(dateString) {
+    const data = new Date(dateString);
+  
+    // opções de formatação
+    const opcoes = {
+      timeZone: "America/Sao_Paulo", // ajusta para horário do Brasil
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    };
+  
+    return data.toLocaleString("pt-BR", opcoes);
+  }
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'transactions':
+        return (
+          <TransactionsTab 
+            transactions={transactions}
+            deleteTransaction={deleteTransaction}
+            formatDate={formatDate}
+          />
+        );
+      case 'categories':
+        return <CategoriesTab />;
+      case 'goals':
+        return <GoalsTab />;
+      case 'reports':
+        return <ReportsTab />;
+      case 'dashboard':
+        return <DashboardTab />;
+      case 'settings':
+        return <SettingsTab />;
+      default:
+        return (
+          <TransactionsTab 
+            transactions={transactions}
+            deleteTransaction={deleteTransaction}
+            formatDate={formatDate}
+          />
+        );
+    }
   };
 
-  const getCategoryInfo = (categoryId, type) => {
-    const category = CATEGORIES[type]?.find(c => c.id === categoryId);
-    return category || { name: 'Sem categoria', icon: '📌', color: '#999' };
-  };
 
   if (!currentUser) {
     return (
@@ -77,49 +125,11 @@ const FinanceApp = () => {
           </div>
         </div>
 
-        {/* Formulário de Transação */}
-        <div className="form-section">
-          <TransactionForm />
-        </div>
+        {/* Navegação por Abas */}
+        <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
 
-        {/* Lista de Transações */}
-        <div className="transactions-section">
-          <h2>Histórico de Transações</h2>
-          {transactions.length === 0 ? (
-            <p className="no-transactions">Nenhuma transação registrada ainda.</p>
-          ) : (
-            <div className="transactions-list">
-              {transactions.map(transaction => {
-                const categoryInfo = getCategoryInfo(transaction.categoryId, transaction.type);
-                return (
-                  <div key={transaction.id} className={`transaction-item ${transaction.type}`}>
-                    <div className="transaction-info">
-                      <div className="transaction-main">
-                        <span className="transaction-description">{transaction.description}</span>
-                        <span className="transaction-category">
-                          {categoryInfo.icon} {categoryInfo.name}
-                        </span>
-                      </div>
-                      <span className="transaction-date">{formatDate(transaction.date)}</span>
-                    </div>
-                    <div className="transaction-amount">
-                      <span className={`amount ${transaction.type}`}>
-                        {transaction.type === 'expense' ? '-' : '+'} R$ {parseFloat(transaction.amount || 0).toFixed(2)}
-                      </span>
-                      <button
-                        onClick={() => deleteTransaction(transaction.id)}
-                        className="btn-remove"
-                        title="Remover transação"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
+        {/* Conteúdo das Abas */}
+        {renderTabContent()}
       </div>
     </div>
   );
