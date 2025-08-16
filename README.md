@@ -251,7 +251,7 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 👨‍💻 Autor
 
-**Seu Nome** - [victorsena760@gmail.com](mailto:victorsena760@gmail.com)
+**Victor Sena** - [victorsena760@gmail.com](mailto:victorsena760@gmail.com)
 
 ## 🙏 Agradecimentos
 
