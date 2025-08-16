@@ -8,6 +8,7 @@ const { testConnection } = require('./config/database');
 const authRoutes = require('./routes/auth');
 const transactionRoutes = require('./routes/transactions');
 const categoryRoutes = require('./routes/categories');
+const fixedItemsRoutes = require('./routes/fixedItems');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/fixed-items', fixedItemsRoutes);
 
 // Rota de teste
 app.get('/', (req, res) => {
@@ -36,7 +38,8 @@ app.get('/', (req, res) => {
     endpoints: {
       auth: '/api/auth',
       transactions: '/api/transactions',
-      categories: '/api/categories'
+      categories: '/api/categories',
+      fixedItems: '/api/fixed-items'
     }
   });
 });

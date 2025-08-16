@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import TabNavigation from './components/TabNavigation';
 import TransactionsTab from './components/TransactionsTab';
+import FixedItemsTab from './components/FixedItemsTab';
 import CategoriesTab from './components/CategoriesTab';
 import GoalsTab from './components/GoalsTab';
 import ReportsTab from './components/ReportsTab';
@@ -57,6 +58,8 @@ const FinanceApp = () => {
             formatDate={formatDate}
           />
         );
+      case 'fixed-items':
+        return <FixedItemsTab />;
       case 'categories':
         return <CategoriesTab />;
       case 'goals':
