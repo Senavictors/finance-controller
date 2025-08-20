@@ -13,15 +13,13 @@ body {
 
 .app {
   min-height: 100vh;
-  padding: 20px;
+  padding: 0;
 }
 
 .container {
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -310,34 +308,34 @@ body {
 /* Responsividade */
 @media (max-width: 768px) {
   .app {
-    padding: 10px;
+    padding: 0;
   }
-  
+
   .header-content {
     flex-direction: column;
     gap: 20px;
     text-align: center;
   }
-  
+
   .header-info h1 {
     font-size: 2rem;
   }
-  
+
   .form-row {
     grid-template-columns: 1fr;
   }
-  
+
   .summary {
     grid-template-columns: 1fr;
     padding: 20px;
   }
-  
+
   .transaction-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
   }
-  
+
   .transaction-amount {
     width: 100%;
     justify-content: space-between;
@@ -348,11 +346,11 @@ body {
   .header {
     padding: 20px;
   }
-  
+
   .header-info h1 {
     font-size: 1.8rem;
   }
-  
+
   .form-section,
   .transactions-section {
     padding: 20px;

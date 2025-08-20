@@ -185,3 +185,7 @@ Este projeto está sob a licença ISC.
 ---
 
 **🎯 Próximos passos:** Integrar com o frontend React e implementar funcionalidades avançadas como relatórios e gráficos.
+
+
+
+

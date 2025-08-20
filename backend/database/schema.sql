@@ -40,6 +40,25 @@ CREATE TABLE IF NOT EXISTS transactions (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Tabela de rendas e despesas fixas
+CREATE TABLE IF NOT EXISTS fixed_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    description VARCHAR(255) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    type ENUM('expense', 'income') NOT NULL,
+    category_id INT NOT NULL,
+    user_id INT NOT NULL,
+    frequency ENUM('monthly', 'weekly', 'biweekly', 'quarterly', 'yearly') DEFAULT 'monthly',
+    start_date DATE NOT NULL,
+    end_date DATE NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE RESTRICT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- Inserir categorias padrão para despesas
 INSERT INTO categories (name, icon, color, type, is_default) VALUES
 ('Alimentação', '🍽️', '#FF6B6B', 'expense', TRUE),
@@ -49,11 +68,14 @@ INSERT INTO categories (name, icon, color, type, is_default) VALUES
 ('Saúde', '🏥', '#FFEAA7', 'expense', TRUE),
 ('Educação', '📚', '#DDA0DD', 'expense', TRUE),
 ('Contas', '📄', '#98D8C8', 'expense', TRUE),
+('Moradia', '🏠', '#E74C3C', 'expense', TRUE),
 ('Outros', '📌', '#F7DC6F', 'expense', TRUE);
 
 -- Inserir categorias padrão para receitas
 INSERT INTO categories (name, icon, color, type, is_default) VALUES
 ('Salário', '💰', '#2ECC71', 'income', TRUE),
+('Vale Refeição', '🍕', '#F39C12', 'income', TRUE),
+('Vale Transporte', '🚌', '#16A085', 'income', TRUE),
 ('Freelance', '💼', '#3498DB', 'income', TRUE),
 ('Investimentos', '📈', '#9B59B6', 'income', TRUE),
 ('Presente', '🎁', '#E67E22', 'income', TRUE),
@@ -65,3 +87,6 @@ CREATE INDEX idx_transactions_date ON transactions(transaction_date);
 CREATE INDEX idx_transactions_category_id ON transactions(category_id);
 CREATE INDEX idx_categories_type ON categories(type);
 CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_fixed_items_user_id ON fixed_items(user_id);
+CREATE INDEX idx_fixed_items_type ON fixed_items(type);
+CREATE INDEX idx_fixed_items_frequency ON fixed_items(frequency);

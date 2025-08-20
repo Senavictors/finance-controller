@@ -10,7 +10,7 @@ const TransactionForm = () => {
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [showForm, setShowForm] = useState(false);
   
-  const { addTransaction } = useTransactions();
+  const { addTransaction, categories, categoriesLoading } = useTransactions();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,8 +48,19 @@ const TransactionForm = () => {
   };
 
   const getCurrentCategories = () => {
-    return CATEGORIES[type] || [];
+    return categories[type] || [];
   };
+
+  // Mostrar loading se as categorias ainda não foram carregadas
+  if (categoriesLoading) {
+    return (
+      <div className="transaction-form-container">
+        <div className="loading-message">
+          Carregando categorias...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="transaction-form-container">
