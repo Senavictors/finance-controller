@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTransactions, CATEGORIES } from '../contexts/TransactionContext';
 import './TransactionForm.css';
 

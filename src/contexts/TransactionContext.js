@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useAuth } from './AuthContext';
 
 const TransactionContext = createContext();
@@ -39,7 +39,7 @@ export const TransactionProvider = ({ children }) => {
   const API_BASE_URL = 'http://localhost:3001/api';
 
   // Função para fazer requisições autenticadas
-  const authenticatedFetch = async (url, options = {}) => {
+  const authenticatedFetch = useCallback(async (url, options = {}) => {
     if (!token) {
       throw new Error('Usuário não autenticado');
     }
@@ -52,10 +52,10 @@ export const TransactionProvider = ({ children }) => {
         ...options.headers,
       },
     });
-  };
+  }, [token]);
 
   // Carregar transações do usuário
-  const loadTransactions = async () => {
+  const loadTransactions = useCallback(async () => {
     if (!token) return;
 
     try {
@@ -71,7 +71,7 @@ export const TransactionProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token, authenticatedFetch]);
 
   // Carregar transações quando o token mudar
   useEffect(() => {
@@ -80,7 +80,7 @@ export const TransactionProvider = ({ children }) => {
     } else {
       setTransactions([]);
     }
-  }, [token]);
+  }, [token, loadTransactions]);
 
   // Adicionar nova transação
   const addTransaction = async (transactionData) => {
