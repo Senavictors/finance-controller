@@ -61,12 +61,19 @@ export const TransactionProvider = ({ children }) => {
   };
 
   // Carregar transações do usuário
-  const loadTransactions = useCallback(async () => {
+  const loadTransactions = useCallback(async (month = null, year = null) => {
     if (!token) return;
 
     try {
       setLoading(true);
-      const response = await authenticatedFetch(`${API_BASE_URL}/transactions`);
+      let url = `${API_BASE_URL}/transactions`;
+      
+      // Se month e year foram fornecidos, adicionar como query parameters
+      if (month !== null && year !== null) {
+        url += `?month=${month}&year=${year}`;
+      }
+      
+      const response = await authenticatedFetch(url);
       const data = await response.json();
 
       if (data.success) {

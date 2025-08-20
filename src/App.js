@@ -11,7 +11,9 @@ import GoalsTab from './components/GoalsTab';
 import ReportsTab from './components/ReportsTab';
 import DashboardTab from './components/DashboardTab';
 import SettingsTab from './components/SettingsTab';
+import MonthlyExpense from './components/MonthlyExpense';
 import './App.css';
+
 
 // Componente principal da aplicação (requer autenticação)
 const FinanceApp = () => {
@@ -70,6 +72,8 @@ const FinanceApp = () => {
         return <DashboardTab />;
       case 'settings':
         return <SettingsTab />;
+      case 'monthly-expense':
+        return <MonthlyExpense />;
       default:
         return (
           <TransactionsTab 

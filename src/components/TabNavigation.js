@@ -4,7 +4,8 @@ import './TabNavigation.css';
 const TabNavigation = ({ activeTab, onTabChange }) => {
   const tabs = [
     { id: 'transactions', label: 'Transações', icon: '💰' },
-    { id: 'fixed-items', label: 'Itens Fixos', icon: '📅' },
+    { id: 'monthly-expense', label: 'Controle Mensal', icon: '📅' },
+    { id: 'fixed-items', label: 'Itens Fixos', icon: '🔒' },
     { id: 'categories', label: 'Categorias', icon: '🏷️' },
     { id: 'goals', label: 'Metas', icon: '🎯' },
     { id: 'reports', label: 'Relatórios', icon: '📊' },

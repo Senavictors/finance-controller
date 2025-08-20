@@ -10,12 +10,15 @@ router.use(auth);
 // GET - Listar todas as transações do usuário
 router.get('/', async (req, res) => {
   try {
-    const transactions = await query(`
+    const { month, year } = req.query;
+    
+    let querySql = `
       SELECT 
         t.id,
         t.description,
         t.amount,
         t.type,
+        t.category_id,
         t.transaction_date,
         t.created_at,
         c.name as category_name,
@@ -24,8 +27,19 @@ router.get('/', async (req, res) => {
       FROM transactions t
       JOIN categories c ON t.category_id = c.id
       WHERE t.user_id = ?
-      ORDER BY t.transaction_date DESC, t.created_at DESC
-    `, [req.user.userId]);
+    `;
+    
+    let queryParams = [req.user.userId];
+    
+    // Se month e year foram fornecidos, filtrar por mês e ano
+    if (month !== undefined && year !== undefined) {
+      querySql += ` AND MONTH(t.transaction_date) = ? AND YEAR(t.transaction_date) = ?`;
+      queryParams.push(parseInt(month) + 1, parseInt(year)); // +1 porque getMonth() retorna 0-11
+    }
+    
+    querySql += ` ORDER BY t.transaction_date DESC, t.created_at DESC`;
+    
+    const transactions = await query(querySql, queryParams);
 
     res.json({
       success: true,
@@ -54,6 +68,7 @@ router.get('/:id', async (req, res) => {
         t.description,
         t.amount,
         t.type,
+        t.category_id,
         t.transaction_date,
         t.created_at,
         c.name as category_name,
@@ -142,6 +157,7 @@ router.post('/', async (req, res) => {
         t.description,
         t.amount,
         t.type,
+        t.category_id,
         t.transaction_date,
         t.created_at,
         c.name as category_name,
@@ -237,6 +253,7 @@ router.put('/:id', async (req, res) => {
         t.description,
         t.amount,
         t.type,
+        t.category_id,
         t.transaction_date,
         t.created_at,
         c.name as category_name,
